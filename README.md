@@ -20,7 +20,7 @@ Advent of Code is an annual series of coding puzzles that are released every day
 1. Clone the repository:
    ```bash
    git clone https://github.com/jjaroztegi/AOC_2024.git
-   cd advent-of-code-2024
+   cd AOC_2024
    ```
 
 2. Navigate to the directory for a specific day (e.g., `Day 1`):
