@@ -30,7 +30,7 @@ Advent of Code is an annual series of coding puzzles that are released every day
 
 3. Compile the C++ code using `g++` (or another compiler of your choice):
    ```bash
-   g++ -o main day1.cpp
+   g++ -std=c++14 -o main day1.cpp
    ```
 
 4. Run the program:
