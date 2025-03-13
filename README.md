@@ -13,7 +13,7 @@ Advent of Code is an annual series of coding puzzles that are released every day
 - Each day's folder will contain:
   - The main C++ source file (`dayXX.cpp`)
   - A `Problem.md` file with instructions for that day's problem
-  - Input files (`input.txt`) when necessary
+  - Input files (`example.txt`) when necessary
   
 ## How to Run the Code
 
