@@ -1,62 +1,47 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <vector>
 
 using namespace std;
 
-bool check_order(vector<int> vec, vector<vector<int>> matrix)
-{
-    for (size_t j = 0; j < matrix.size(); j++)
-    {
+bool check_order(vector<int> vec, vector<vector<int>> matrix) {
+    for (size_t j = 0; j < matrix.size(); j++) {
         int num1 = -1;
         int num2 = -1;
 
-        for (size_t i = 0; i < vec.size(); i++)
-        {
-            if (vec[i] == matrix[j][0])
-            {
+        for (size_t i = 0; i < vec.size(); i++) {
+            if (vec[i] == matrix[j][0]) {
                 num1 = i;
-            }
-            else if (vec[i] == matrix[j][1])
-            {
+            } else if (vec[i] == matrix[j][1]) {
                 num2 = i;
             }
         }
 
-        if (num1 > num2 && num1 != -1 && num2 != -1)
-        {
+        if (num1 > num2 && num1 != -1 && num2 != -1) {
             return false;
         }
     }
     return true;
 }
 
-vector<int> fix_order(vector<int> vec, vector<vector<int>> matrix)
-{
+vector<int> fix_order(vector<int> vec, vector<vector<int>> matrix) {
     bool swap;
-    do
-    {
+    do {
         swap = false;
-        for (size_t j = 0; j < matrix.size(); j++)
-        {
+        for (size_t j = 0; j < matrix.size(); j++) {
             int num1 = -1;
             int num2 = -1;
 
-            for (size_t i = 0; i < vec.size(); i++)
-            {
-                if (vec[i] == matrix[j][0])
-                {
+            for (size_t i = 0; i < vec.size(); i++) {
+                if (vec[i] == matrix[j][0]) {
                     num1 = i;
-                }
-                else if (vec[i] == matrix[j][1])
-                {
+                } else if (vec[i] == matrix[j][1]) {
                     num2 = i;
                 }
             }
 
-            if (num1 > num2 && num1 != -1 && num2 != -1)
-            {
+            if (num1 > num2 && num1 != -1 && num2 != -1) {
                 int tmp = vec[num1];
                 vec[num1] = vec[num2];
                 vec[num2] = tmp;
@@ -67,9 +52,8 @@ vector<int> fix_order(vector<int> vec, vector<vector<int>> matrix)
     return vec;
 }
 
-int main()
-{
-    string filename = "input.txt";
+int main() {
+    string filename = "example.txt";
     ifstream file(filename);
 
     string line_1;
@@ -77,10 +61,8 @@ int main()
     size_t cols = 2;
     size_t rows = 0;
 
-    while (getline(file, line_1))
-    {
-        if (line_1.empty())
-        {
+    while (getline(file, line_1)) {
+        if (line_1.empty()) {
             break;
         }
         rows++;
@@ -98,33 +80,23 @@ int main()
     int count_right = 0;
     int count_wrong = 0;
 
-    while (getline(file, line_2))
-    {
-        if (line_2.empty())
-        {
+    while (getline(file, line_2)) {
+        if (line_2.empty()) {
             enabled = true;
             continue;
-        }
-        else if (enabled)
-        {
+        } else if (enabled) {
             stringstream ss(line_2);
-            while (getline(ss, line_2, ','))
-            {
+            while (getline(ss, line_2, ',')) {
                 vec.push_back(stoi(line_2));
             }
-            if (check_order(vec, matrix))
-            {
+            if (check_order(vec, matrix)) {
                 count_right += vec[vec.size() / 2];
-            }
-            else
-            {
+            } else {
                 vec = fix_order(vec, matrix);
                 count_wrong += vec[vec.size() / 2];
             }
             vec.clear();
-        }
-        else
-        {
+        } else {
             stringstream ss(line_2);
             ss >> matrix[count_rows][0];
             ss.ignore(1);
@@ -133,8 +105,12 @@ int main()
         }
     }
 
-    cout << "Adding up the middle page number from the correctly-ordered updates gives " << count_right << endl;
-    cout << "Adding up the middle page numbers after correctly ordering just the wrong ones gives " << count_wrong << endl;
+    cout << "Adding up the middle page number from the correctly-ordered "
+            "updates gives "
+         << count_right << endl;
+    cout << "Adding up the middle page numbers after correctly ordering just "
+            "the wrong ones gives "
+         << count_wrong << endl;
 
     return 0;
 }

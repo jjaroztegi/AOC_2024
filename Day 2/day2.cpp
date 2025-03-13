@@ -1,51 +1,41 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
 #include <cmath>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <vector>
 
 using namespace std;
 
-int check_safe(const vector<int> &arr)
-{
+int check_safe(const vector<int> &arr) {
     bool increase;
 
-    for (int i = 0; i < arr.size() - 1; i++)
-    {
+    for (int i = 0; i < arr.size() - 1; i++) {
         int order = arr[i + 1] - arr[i];
 
-        if (order == 0)
-        {
+        if (order == 0) {
             return 0;
         }
 
-        if (i == 0)
-        {
+        if (i == 0) {
             increase = (order > 0);
-        }
-        else if ((increase && order <= 0) || (!increase && order >= 0))
-        {
+        } else if ((increase && order <= 0) || (!increase && order >= 0)) {
             return 0;
         }
 
-        if (abs(order) > 3)
-        {
+        if (abs(order) > 3) {
             return 0;
         }
     }
     return 1;
 }
 
-int check_act_safe(vector<int> &arr)
-{
+int check_act_safe(vector<int> &arr) {
     vector<int> arr_copy = arr;
 
-    for (int i = 0; i < arr.size(); i++)
-    {
+    for (int i = 0; i < arr.size(); i++) {
         arr.erase(arr.begin() + i);
 
-        if (check_safe(arr))
-        {
+        if (check_safe(arr)) {
             return 1;
         }
 
@@ -55,21 +45,18 @@ int check_act_safe(vector<int> &arr)
     return 0;
 }
 
-int main()
-{
+int main() {
     int safe = 0;
     int act_safe = 0;
     string line;
 
-    ifstream input("input.txt");
-    while (getline(input, line))
-    {
+    ifstream input("example.txt");
+    while (getline(input, line)) {
         stringstream ss(line);
         vector<int> arr;
         int value;
 
-        while (ss >> value)
-        {
+        while (ss >> value) {
             arr.push_back(value);
         }
 

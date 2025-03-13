@@ -1,18 +1,14 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
-vector<int> find_guard(vector<vector<string>> matrix)
-{
+vector<int> find_guard(vector<vector<string>> matrix) {
     vector<int> guard_location;
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        for (size_t j = 0; j < matrix[i].size(); j++)
-        {
-            if (matrix[i][j] == "^")
-            {
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            if (matrix[i][j] == "^") {
                 guard_location.push_back(i);
                 guard_location.push_back(j);
             }
@@ -21,20 +17,17 @@ vector<int> find_guard(vector<vector<string>> matrix)
     return guard_location;
 }
 
-vector<vector<string>> draw_route(vector<vector<string>> matrix, vector<int> guard_location)
-{
+vector<vector<string>> draw_route(vector<vector<string>> matrix,
+                                  vector<int> guard_location) {
     int row = guard_location[0];
     int col = guard_location[1];
 
-    while (true)
-    {
+    while (true) {
         // up
-        while (matrix[row][col] != "#")
-        {
+        while (matrix[row][col] != "#") {
             matrix[row][col] = "X";
             row--;
-            if (matrix[row][col] != "#" && row == 0)
-            {
+            if (matrix[row][col] != "#" && row == 0) {
                 matrix[row][col] = "X";
                 return matrix;
             }
@@ -42,12 +35,10 @@ vector<vector<string>> draw_route(vector<vector<string>> matrix, vector<int> gua
         row++;
 
         // right
-        while (matrix[row][col] != "#")
-        {
+        while (matrix[row][col] != "#") {
             matrix[row][col] = "X";
             col++;
-            if (matrix[row][col] != "#" && col == matrix[0].size() - 1)
-            {
+            if (matrix[row][col] != "#" && col == matrix[0].size() - 1) {
                 matrix[row][col] = "X";
                 return matrix;
             }
@@ -55,12 +46,10 @@ vector<vector<string>> draw_route(vector<vector<string>> matrix, vector<int> gua
         col--;
 
         // down
-        while (matrix[row][col] != "#")
-        {
+        while (matrix[row][col] != "#") {
             matrix[row][col] = "X";
             row++;
-            if (matrix[row][col] != "#" && row == matrix.size() - 1)
-            {
+            if (matrix[row][col] != "#" && row == matrix.size() - 1) {
                 matrix[row][col] = "X";
                 return matrix;
             }
@@ -68,12 +57,10 @@ vector<vector<string>> draw_route(vector<vector<string>> matrix, vector<int> gua
         row--;
 
         // left
-        while (matrix[row][col] != "#")
-        {
+        while (matrix[row][col] != "#") {
             matrix[row][col] = "X";
             col--;
-            if (matrix[row][col] != "#" && col == 0)
-            {
+            if (matrix[row][col] != "#" && col == 0) {
                 matrix[row][col] = "X";
                 return matrix;
             }
@@ -82,15 +69,11 @@ vector<vector<string>> draw_route(vector<vector<string>> matrix, vector<int> gua
     }
 }
 
-int count_X(vector<vector<string>> matrix)
-{
+int count_X(vector<vector<string>> matrix) {
     int count = 0;
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        for (size_t j = 0; j < matrix[i].size(); j++)
-        {
-            if (matrix[i][j] == "X")
-            {
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            if (matrix[i][j] == "X") {
                 count++;
             }
         }
@@ -98,33 +81,24 @@ int count_X(vector<vector<string>> matrix)
     return count;
 }
 
-vector<vector<string>> draw_loop(vector<vector<string>> matrix, vector<int> guard_location)
-{
+vector<vector<string>> draw_loop(vector<vector<string>> matrix,
+                                 vector<int> guard_location) {
     int row = guard_location[0];
     int col = guard_location[1];
 
-    while (true)
-    {
+    while (true) {
         // up
-        while (matrix[row][col] != "#")
-        {
-            if (matrix[row][col] == "-")
-            {
+        while (matrix[row][col] != "#") {
+            if (matrix[row][col] == "-") {
                 matrix[row][col] = "+";
-            }
-            else
-            {
+            } else {
                 matrix[row][col] = "|";
             }
             row--;
-            if (matrix[row][col] != "#" && row == 0)
-            {
-                if (matrix[row][col] == "-")
-                {
+            if (matrix[row][col] != "#" && row == 0) {
+                if (matrix[row][col] == "-") {
                     matrix[row][col] = "+";
-                }
-                else
-                {
+                } else {
                     matrix[row][col] = "|";
                 }
                 return matrix;
@@ -133,25 +107,17 @@ vector<vector<string>> draw_loop(vector<vector<string>> matrix, vector<int> guar
         row++;
 
         // right
-        while (matrix[row][col] != "#")
-        {
-            if (matrix[row][col] == "|")
-            {
+        while (matrix[row][col] != "#") {
+            if (matrix[row][col] == "|") {
                 matrix[row][col] = "+";
-            }
-            else
-            {
+            } else {
                 matrix[row][col] = "-";
             }
             col++;
-            if (matrix[row][col] != "#" && col == matrix[0].size() - 1)
-            {
-                if (matrix[row][col] == "|")
-                {
+            if (matrix[row][col] != "#" && col == matrix[0].size() - 1) {
+                if (matrix[row][col] == "|") {
                     matrix[row][col] = "+";
-                }
-                else
-                {
+                } else {
                     matrix[row][col] = "-";
                 }
                 return matrix;
@@ -160,25 +126,17 @@ vector<vector<string>> draw_loop(vector<vector<string>> matrix, vector<int> guar
         col--;
 
         // down
-        while (matrix[row][col] != "#")
-        {
-            if (matrix[row][col] == "-")
-            {
+        while (matrix[row][col] != "#") {
+            if (matrix[row][col] == "-") {
                 matrix[row][col] = "+";
-            }
-            else
-            {
+            } else {
                 matrix[row][col] = "|";
             }
             row++;
-            if (matrix[row][col] != "#" && row == matrix.size() - 1)
-            {
-                if (matrix[row][col] == "-")
-                {
+            if (matrix[row][col] != "#" && row == matrix.size() - 1) {
+                if (matrix[row][col] == "-") {
                     matrix[row][col] = "+";
-                }
-                else
-                {
+                } else {
                     matrix[row][col] = "|";
                 }
                 return matrix;
@@ -187,25 +145,17 @@ vector<vector<string>> draw_loop(vector<vector<string>> matrix, vector<int> guar
         row--;
 
         // left
-        while (matrix[row][col] != "#")
-        {
-            if (matrix[row][col] == "|")
-            {
+        while (matrix[row][col] != "#") {
+            if (matrix[row][col] == "|") {
                 matrix[row][col] = "+";
-            }
-            else
-            {
+            } else {
                 matrix[row][col] = "-";
             }
             col--;
-            if (matrix[row][col] != "#" && col == 0)
-            {
-                if (matrix[row][col] == "|")
-                {
+            if (matrix[row][col] != "#" && col == 0) {
+                if (matrix[row][col] == "|") {
                     matrix[row][col] = "+";
-                }
-                else
-                {
+                } else {
                     matrix[row][col] = "-";
                 }
                 return matrix;
@@ -215,30 +165,23 @@ vector<vector<string>> draw_loop(vector<vector<string>> matrix, vector<int> guar
     }
 }
 
-string appendDirection(string current, string direction)
-{
-    if (current.find(direction) == string::npos)
-    {
+string appendDirection(string current, string direction) {
+    if (current.find(direction) == string::npos) {
         return current + direction;
     }
     return current;
 }
 
-int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
-{
+int detect_loop(vector<vector<string>> matrix, vector<int> guard_location) {
     int loop = 0;
 
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        for (size_t j = 0; j < matrix[i].size(); j++)
-        {
-            if (i == guard_location[0] && j == guard_location[1])
-            {
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            if (i == guard_location[0] && j == guard_location[1]) {
                 continue;
             }
 
-            if (matrix[i][j] == "#")
-            {
+            if (matrix[i][j] == "#") {
                 continue;
             }
 
@@ -251,33 +194,27 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
             bool is_loop = false;
             bool exit_while = false;
 
-            while (true)
-            {
+            while (true) {
                 // up
-                while (new_matrix[row][col] != "#")
-                {
-                    if (new_matrix[row][col].find("∧") != string::npos)
-                    {
+                while (new_matrix[row][col] != "#") {
+                    if (new_matrix[row][col].find("∧") != string::npos) {
                         is_loop = true;
                         break;
                     }
-                    if (new_matrix[row][col].find(">") != string::npos || new_matrix[row][col].find("<") != string::npos)
-                    {
-                        new_matrix[row][col] = appendDirection(new_matrix[row][col], "∧");
-                    }
-                    else
-                    {
+                    if (new_matrix[row][col].find(">") != string::npos ||
+                        new_matrix[row][col].find("<") != string::npos) {
+                        new_matrix[row][col] =
+                            appendDirection(new_matrix[row][col], "∧");
+                    } else {
                         new_matrix[row][col] = "∧";
                     }
                     row--;
-                    if (new_matrix[row][col] != "#" && row == 0)
-                    {
-                        if (new_matrix[row][col].find(">") != string::npos || new_matrix[row][col].find("<") != string::npos)
-                        {
-                            new_matrix[row][col] = appendDirection(new_matrix[row][col], "∧");
-                        }
-                        else
-                        {
+                    if (new_matrix[row][col] != "#" && row == 0) {
+                        if (new_matrix[row][col].find(">") != string::npos ||
+                            new_matrix[row][col].find("<") != string::npos) {
+                            new_matrix[row][col] =
+                                appendDirection(new_matrix[row][col], "∧");
+                        } else {
                             new_matrix[row][col] = "∧";
                         }
                         exit_while = true;
@@ -289,30 +226,27 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
                     break;
 
                 // right
-                while (col < new_matrix[0].size() - 1 && new_matrix[row][col] != "#")
-                {
-                    if (new_matrix[row][col].find(">") != string::npos)
-                    {
+                while (col < new_matrix[0].size() - 1 &&
+                       new_matrix[row][col] != "#") {
+                    if (new_matrix[row][col].find(">") != string::npos) {
                         is_loop = true;
                         break;
                     }
-                    if (new_matrix[row][col].find("∧") != string::npos || new_matrix[row][col].find("v") != string::npos)
-                    {
-                        new_matrix[row][col] = appendDirection(new_matrix[row][col], ">");
-                    }
-                    else
-                    {
+                    if (new_matrix[row][col].find("∧") != string::npos ||
+                        new_matrix[row][col].find("v") != string::npos) {
+                        new_matrix[row][col] =
+                            appendDirection(new_matrix[row][col], ">");
+                    } else {
                         new_matrix[row][col] = ">";
                     }
                     col++;
-                    if (new_matrix[row][col] != "#" && col == new_matrix[0].size() - 1)
-                    {
-                        if (new_matrix[row][col].find("∧") != string::npos || new_matrix[row][col].find("v") != string::npos)
-                        {
-                            new_matrix[row][col] = appendDirection(new_matrix[row][col], ">");
-                        }
-                        else
-                        {
+                    if (new_matrix[row][col] != "#" &&
+                        col == new_matrix[0].size() - 1) {
+                        if (new_matrix[row][col].find("∧") != string::npos ||
+                            new_matrix[row][col].find("v") != string::npos) {
+                            new_matrix[row][col] =
+                                appendDirection(new_matrix[row][col], ">");
+                        } else {
                             new_matrix[row][col] = ">";
                         }
                         exit_while = true;
@@ -324,30 +258,27 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
                     break;
 
                 // down
-                while (row < new_matrix.size() - 1 && new_matrix[row][col] != "#")
-                {
-                    if (new_matrix[row][col].find("v") != string::npos)
-                    {
+                while (row < new_matrix.size() - 1 &&
+                       new_matrix[row][col] != "#") {
+                    if (new_matrix[row][col].find("v") != string::npos) {
                         is_loop = true;
                         break;
                     }
-                    if (new_matrix[row][col].find(">") != string::npos || new_matrix[row][col].find("<") != string::npos)
-                    {
-                        new_matrix[row][col] = appendDirection(new_matrix[row][col], "v");
-                    }
-                    else
-                    {
+                    if (new_matrix[row][col].find(">") != string::npos ||
+                        new_matrix[row][col].find("<") != string::npos) {
+                        new_matrix[row][col] =
+                            appendDirection(new_matrix[row][col], "v");
+                    } else {
                         new_matrix[row][col] = "v";
                     }
                     row++;
-                    if (new_matrix[row][col] != "#" && row == new_matrix.size() - 1)
-                    {
-                        if (new_matrix[row][col].find(">") != string::npos || new_matrix[row][col].find("<") != string::npos)
-                        {
-                            new_matrix[row][col] = appendDirection(new_matrix[row][col], "v");
-                        }
-                        else
-                        {
+                    if (new_matrix[row][col] != "#" &&
+                        row == new_matrix.size() - 1) {
+                        if (new_matrix[row][col].find(">") != string::npos ||
+                            new_matrix[row][col].find("<") != string::npos) {
+                            new_matrix[row][col] =
+                                appendDirection(new_matrix[row][col], "v");
+                        } else {
                             new_matrix[row][col] = "v";
                         }
                         exit_while = true;
@@ -359,30 +290,25 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
                     break;
 
                 // left
-                while (col > 0 && new_matrix[row][col] != "#")
-                {
-                    if (new_matrix[row][col].find("<") != string::npos)
-                    {
+                while (col > 0 && new_matrix[row][col] != "#") {
+                    if (new_matrix[row][col].find("<") != string::npos) {
                         is_loop = true;
                         break;
                     }
-                    if (new_matrix[row][col].find("∧") != string::npos || new_matrix[row][col].find("v") != string::npos)
-                    {
-                        new_matrix[row][col] = appendDirection(new_matrix[row][col], "<");
-                    }
-                    else
-                    {
+                    if (new_matrix[row][col].find("∧") != string::npos ||
+                        new_matrix[row][col].find("v") != string::npos) {
+                        new_matrix[row][col] =
+                            appendDirection(new_matrix[row][col], "<");
+                    } else {
                         new_matrix[row][col] = "<";
                     }
                     col--;
-                    if (new_matrix[row][col] != "#" && col == 0)
-                    {
-                        if (new_matrix[row][col].find("∧") != string::npos || new_matrix[row][col].find("v") != string::npos)
-                        {
-                            new_matrix[row][col] = appendDirection(new_matrix[row][col], "<");
-                        }
-                        else
-                        {
+                    if (new_matrix[row][col] != "#" && col == 0) {
+                        if (new_matrix[row][col].find("∧") != string::npos ||
+                            new_matrix[row][col].find("v") != string::npos) {
+                            new_matrix[row][col] =
+                                appendDirection(new_matrix[row][col], "<");
+                        } else {
                             new_matrix[row][col] = "<";
                         }
                         exit_while = true;
@@ -394,8 +320,7 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
                     break;
             }
 
-            if (is_loop == true)
-            {
+            if (is_loop == true) {
                 loop++;
             }
         }
@@ -403,9 +328,8 @@ int detect_loop(vector<vector<string>> matrix, vector<int> guard_location)
     return loop;
 }
 
-int main()
-{
-    string filename = "input.txt";
+int main() {
+    string filename = "example.txt";
     ifstream file(filename);
     ofstream File_part1("output_part1.txt");
     ofstream File_part2("output_part2.txt");
@@ -415,11 +339,9 @@ int main()
     vector<vector<string>> matrix, output_matrix;
     vector<string> line;
 
-    while (getline(file, line_1))
-    {
+    while (getline(file, line_1)) {
         line.clear();
-        for (size_t i = 0; i < line_1.size(); i++)
-        {
+        for (size_t i = 0; i < line_1.size(); i++) {
             line.push_back(string(1, line_1[i]));
         }
         matrix.push_back(line);
@@ -429,10 +351,8 @@ int main()
     output_matrix = draw_route(matrix, guard_location);
 
     // output part 1
-    for (size_t i = 0; i < output_matrix.size(); i++)
-    {
-        for (size_t j = 0; j < output_matrix[i].size(); j++)
-        {
+    for (size_t i = 0; i < output_matrix.size(); i++) {
+        for (size_t j = 0; j < output_matrix[i].size(); j++) {
             File_part1 << output_matrix[i][j];
         }
         File_part1 << endl;
@@ -442,10 +362,8 @@ int main()
     output_matrix = draw_loop(matrix, guard_location);
 
     // output part 2
-    for (size_t i = 0; i < output_matrix.size(); i++)
-    {
-        for (size_t j = 0; j < output_matrix[i].size(); j++)
-        {
+    for (size_t i = 0; i < output_matrix.size(); i++) {
+        for (size_t j = 0; j < output_matrix[i].size(); j++) {
             File_part2 << output_matrix[i][j];
         }
         File_part2 << endl;
@@ -456,9 +374,11 @@ int main()
     File_part1.close();
     File_part2.close();
 
-    cout << "The guard will visit " << count << " distinct positions before leaving the mapped area." << endl;
+    cout << "The guard will visit " << count
+         << " distinct positions before leaving the mapped area." << endl;
 
-    cout << "You could choose " << loop << " different positions for the guard to get stuck." << endl;
+    cout << "You could choose " << loop
+         << " different positions for the guard to get stuck." << endl;
 
     return 0;
 }
