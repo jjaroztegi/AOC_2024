@@ -31,4 +31,13 @@
 *.out
 *.app
 
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
 .vscode
+
+# Puzzle input
+input.txt
